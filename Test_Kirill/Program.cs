@@ -17,8 +17,8 @@ int Prompt(string massage)
 
 string NewString(int N)
 {
-    var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()[]{}/|?<>";
-    int random_length = new Random().Next(1, N);
+    var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-!@#$%^&*()[]{}/|?:;<>";
+    int random_length = new Random().Next(1, N + 1);    
     var stringChars = new char[random_length];
     for (int i = 0; i < random_length; i++)
     {
@@ -64,13 +64,13 @@ void PrintMatrix(string[] col)
 }
 
 
-string[] ChangeArray(string[] array)
+string[] ChangeArray(string[] array, int max_length)
 {
     string[] matrix = new string[array.Length];
     int num_pos = 0;
     for (int i = 0; i < array.GetLength(0); i++)
     {
-        if (array[i].Length < 4)
+        if (array[i].Length <= max_length)
         {
             matrix[num_pos] = array[i];
             num_pos++;
@@ -87,6 +87,6 @@ int numberM = Prompt("Введите число элементов исходн�
 string[] matrix = NewArray(numberM, 8);
 Console.WriteLine("Исходный массив:");
 PrintMatrix(matrix);
-string[] array = ChangeArray(matrix);
+string[] array = ChangeArray(matrix, 3);
 Console.WriteLine("Сформированный массив:");
 PrintMatrix(array);
