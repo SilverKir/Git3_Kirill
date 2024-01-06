@@ -11,8 +11,7 @@
 int Prompt(string massage)
 {
     System.Console.Write(massage);
-    string value = Console.ReadLine();
-    int result = Convert.ToInt32(value);
+    int result = Convert.ToInt32(Console.ReadLine());
     return result;
 }
 
@@ -38,23 +37,32 @@ string[] NewArray(int m, int n)
     return matrix;
 }
 
-void PrintMatrix(string[] array)
-{
-    if (array.Length > 0)
-    {
-        Console.Write($"['{array[0]}'" + ",");
-        for (int i = 1; i < array.GetLength(0) - 1; i++)
-        {
-            Console.Write($"'{array[i]}'" + ",");
-        }
-        Console.WriteLine($"'{array[array.GetLength(0) - 1]}'" + "]");
-    }
-    else
-    {
-        Console.WriteLine("Массива не существует");
-    }
 
+void PrintMatrix(string[] col)
+{
+    int count = col.Length;
+    if (count > 0)
+    {
+        int position = 0;
+        Console.Write("[");
+        while (position < count)
+        {
+            if (position == (count - 1))
+            {
+                Console.Write($"'{col[position]}'");
+                position++;
+            }
+            else
+            {
+                Console.Write($"'{col[position]}',");
+                position++;
+            }
+        }
+        Console.WriteLine("]");
+    }
+    else { Console.WriteLine("Массива не существует"); }
 }
+
 
 string[] ChangeArray(string[] array)
 {
@@ -75,11 +83,10 @@ string[] ChangeArray(string[] array)
 
 
 Console.Clear();
-
-int numberM = Prompt("Введите число элементов матрицы: ");
+int numberM = Prompt("Введите число элементов исходного массива: ");
 string[] matrix = NewArray(numberM, 8);
 Console.WriteLine("Исходный массив:");
 PrintMatrix(matrix);
 string[] array = ChangeArray(matrix);
-Console.WriteLine("Преобразованный массив:");
+Console.WriteLine("Сформированный массив:");
 PrintMatrix(array);
