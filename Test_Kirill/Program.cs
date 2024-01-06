@@ -18,9 +18,9 @@ int Prompt(string massage)
 
 string NewString(int N)
 {
-    var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()[]{}/|?<>";
     int random_length = new Random().Next(1, N);
-    var stringChars= new char[random_length];
+    var stringChars = new char[random_length];
     for (int i = 0; i < random_length; i++)
     {
         stringChars[i] = chars[new Random().Next(chars.Length)];
@@ -40,27 +40,38 @@ string[] NewArray(int m, int n)
 
 void PrintMatrix(string[] array)
 {
-    Console.Write($"['{array[0]}'" + ",");
-    for (int i = 1; i < array.GetLength(0)-1; i++)
+    if (array.Length > 0)
     {
-        Console.Write($"'{array[i]}'" + ",");
+        Console.Write($"['{array[0]}'" + ",");
+        for (int i = 1; i < array.GetLength(0) - 1; i++)
+        {
+            Console.Write($"'{array[i]}'" + ",");
+        }
+        Console.WriteLine($"'{array[array.GetLength(0) - 1]}'" + "]");
     }
-    Console.Write($"'{array[array.GetLength(0)-1]}'" + "]");
+    else
+    {
+        Console.WriteLine("Массива не существует");
+    }
 
 }
 
-// int [,] ChangeArray(int[,] array) 
-// {
-//     int[,] matrix = new int[array.GetLength(0), array.GetLength(1)];
-//     for (int i = 0; i < array.GetLength(0); i++)
-//     {
-//         for (int j = 0; j < array.GetLength(1); j++)
-//         {   
-//             matrix[i, j]=array[j, i];          
-//         }      
-//     }  
-//     return matrix; 
-// }
+string[] ChangeArray(string[] array)
+{
+    string[] matrix = new string[array.Length];
+    int num_pos = 0;
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        if (array[i].Length < 4)
+        {
+            matrix[num_pos] = array[i];
+            num_pos++;
+        }
+    }
+
+    Array.Resize(ref matrix, num_pos);
+    return matrix;
+}
 
 
 Console.Clear();
@@ -69,7 +80,6 @@ int numberM = Prompt("Введите число элементов матриц�
 string[] matrix = NewArray(numberM, 8);
 Console.WriteLine("Исходный массив:");
 PrintMatrix(matrix);
-
-//  
-// int[,] array  = ChangeArray(matrix);
-// PrintMatrix(array);
+string[] array = ChangeArray(matrix);
+Console.WriteLine("Преобразованный массив:");
+PrintMatrix(array);
